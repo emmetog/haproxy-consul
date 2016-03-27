@@ -19,6 +19,7 @@ $ docker run -d \
     -p 80:80 \
     -p 443:443 \
     -v /path/to/haproxy/template:/etc/haproxy/haproxy.template:ro \
+    --link consul:consul \
     emmetog/haproxy-consul
 ```
 
@@ -28,6 +29,25 @@ template into `/etc/haproxy/haproxy.template`.
 You can either create your own new docker image which is based on this one and hardcode
 your template inside, or you can run this container directly and map your template into
 the container as a volume, as in the example above.
+
+## Consul server
+
+By default the container assumes that the consul server is reachable through the hostname
+"consul". This makes it easy to get started, all you need to do is link this container
+to the consul container using the alias "consul" and everything will work. However if you
+want to change the hostname that consul-template uses to connect to the consul server, set
+the `CONSUL_SERVER` environmental variable. Similarly, you can change the port using the
+`CONSUL_PORT` environmental variable (default is 8500).
+
+```
+$ docker run -d \
+    -p 80:80 \
+    -p 443:443 \
+    -v /path/to/haproxy/template:/etc/haproxy/haproxy.template:ro \
+    -e CONSUL_SERVER 10.0.0.32 \
+    -e CONSUL_PORT 8501 \
+    emmetog/haproxy-consul
+```
 
 ## Template examples
 
@@ -82,6 +102,8 @@ backend site3_cluster
     {{range service .Name}}server {{.Node}} {{.Address}}:{{.Port}} check{{end}}
     {{end}}{{end}}{{end}}{{end}}
 ```
+
+### Example template
 
 This template will (todo: explain this)
 ```
