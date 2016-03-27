@@ -65,7 +65,8 @@ same IP and you want your load balancer to send the traffic for each domain
 to separate services. In this template there an example of a normal HTTP
 endpoint which doesn't use SSL (site3). For this template to work you will
 have to add the tags "site1", "site2" and "site3" to the corresponding services
-when registering the services in consul.
+when registering the services in consul. You will also need to add the certs
+into `/etc/haproxy/certs`.
 
 Normally [registrator](https://github.com/gliderlabs/registrator) is used to
 automatically register the services in consul.
@@ -75,7 +76,8 @@ global
     tune.ssl.default-dh-param 2048
 
 frontend www-in
-    bind *:443 ssl crt /etc/proxy/certs/
+    bind *:80
+    bind *:443 ssl crt /etc/haproxy/certs/
 
     # Site1 (uses SSL only, non-HTTPS is redirected to HTTPS)
     acl is_site1 req_ssl_sni -i site1.com
