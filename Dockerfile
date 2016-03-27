@@ -4,14 +4,7 @@ MAINTAINER Emmet O'Grady <emmet789@gmail.com>
 
 ENV CONSUL_TEMPLATE_VERSION 0.7.0
 
-ADD haproxy.conf /etc/haproxy/haproxy.conf
-
-ADD start.sh /start.sh
-RUN chmod u+x /start.sh
-ADD reload_haproxy.sh /reload_haproxy.sh
-RUN chmod u+x /reload_haproxy.sh
-
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["/bin/sh"]
 CMD ["/start.sh"]
 
 RUN apk update \
@@ -23,3 +16,10 @@ RUN apk update \
     && rm -rf /tmp/consul* \
     && chmod a+x /usr/local/bin/consul-template \
     && apk del curl
+
+ADD haproxy.conf /etc/haproxy/haproxy.conf
+
+ADD start.sh /start.sh
+RUN chmod u+x /start.sh
+ADD reload_haproxy.sh /reload_haproxy.sh
+RUN chmod u+x /reload_haproxy.sh

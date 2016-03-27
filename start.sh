@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 HAPROXY_ROOT=/etc/haproxy
 PIDFILE=/var/run/haproxy.pid
