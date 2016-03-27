@@ -11,6 +11,9 @@ RUN chmod u+x /start.sh
 ADD reload_haproxy.sh /reload_haproxy.sh
 RUN chmod u+x /reload_haproxy.sh
 
+ENTRYPOINT ["/start.sh"]
+CMD [""]
+
 RUN apk update \
     && apk add curl \
     && curl -L -o /tmp/consul-template.tar.gz https://github.com/hashicorp/consul-template/releases/download/v0.7.0/consul-template_0.7.0_linux_amd64.tar.gz \
