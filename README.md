@@ -1,5 +1,7 @@
 # HAProxy with Consul Template
 
+[![](https://badge.imagelayers.io/emmetog/haproxy-consul:latest.svg)](https://imagelayers.io/?images=emmetog/haproxy-consul:latest 'Image size')
+
 This image contains a haproxy server whose configuration is generated from
 the services registered in consul.
 
@@ -13,15 +15,19 @@ new configuration is used.
 
 Run this container like this:
 ```
-$ docker run -d -v /path/to/haproxy/template:/etc/haproxy/haproxy.template:ro emmetog/haproxy-consul
+$ docker run -d \
+    -p 80:80 \
+    -p 443:443 \
+    -v /path/to/haproxy/template:/etc/haproxy/haproxy.template:ro \
+    emmetog/haproxy-consul
 ```
 
-Note: there is no haproxy config template file in this container, you *must* map your own
+***Note***: there is no haproxy config template file in this container, you **must** map your own
 template into `/etc/haproxy/haproxy.template`.
 
 You can either create your own new docker image which is based on this one and hardcode
 your template inside, or you can run this container directly and map your template into
-the container as a volume.
+the container as a volume, as in the example above.
 
 ## Template examples
 
