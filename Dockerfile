@@ -11,8 +11,8 @@ RUN chmod u+x /start.sh
 ADD reload_haproxy.sh /reload_haproxy.sh
 RUN chmod u+x /reload_haproxy.sh
 
-ENTRYPOINT ["/start.sh"]
-CMD [""]
+ENTRYPOINT ["/bin/bash"]
+CMD ["/start.sh"]
 
 RUN apk update \
     && apk add curl \
