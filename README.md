@@ -34,18 +34,22 @@ the container as a volume, as in the example above.
 
 By default the container assumes that the consul server is reachable through the hostname
 "consul". This makes it easy to get started, all you need to do is link this container
-to the consul container using the alias "consul" and everything will work. However if you
+to the consul container using the alias "consul". However if you
 want to change the hostname that consul-template uses to connect to the consul server, set
 the `CONSUL_SERVER` environmental variable. Similarly, you can change the port using the
-`CONSUL_PORT` environmental variable (default is 8500).
+`CONSUL_PORT` environmental variable (default is 8500). If you do specify the `CONSUL_SERVER`
+then you don't need to link to the consul container.
+
+In the following example we are using the internal DNS of docker to resolve the hostname
+"consul.service.consul" but you could also specify an IP.
 
 ```
 $ docker run -d \
     -p 80:80 \
     -p 443:443 \
     -v /path/to/haproxy/template:/etc/haproxy/haproxy.template:ro \
-    -e CONSUL_SERVER 10.0.0.32 \
-    -e CONSUL_PORT 8501 \
+    -e CONSUL_SERVER consul.service.consul \
+    -e CONSUL_PORT 8500 \
     emmetog/haproxy-consul
 ```
 
