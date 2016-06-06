@@ -16,7 +16,7 @@ RUN apt-get update \
     && rm -rf /tmp/consul* \
     && chmod a+x /usr/local/bin/consul-template \
     && apt-get remove -y curl unzip \
-    && apt-get autoremove \
+    && apt-get autoremove -y \
     && apt-get autoclean
 
 ENTRYPOINT ["/bin/sh"]
