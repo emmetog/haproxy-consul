@@ -1,23 +1,26 @@
-FROM haproxy:1.6.4-alpine
+FROM ubuntu:xenial
 
 MAINTAINER Emmet O'Grady <emmet789@gmail.com>
 
-ENV CONSUL_TEMPLATE_VERSION 0.7.0
+ENV CONSUL_TEMPLATE_VERSION 0.14.0
+
+RUN apt-get update \
+    && apt-get install -y \
+        haproxy \
+        curl \
+        unzip \
+    && curl -L -o /tmp/consul-template.zip https://releases.hashicorp.com/consul-template/0.14.0/consul-template_0.14.0_linux_amd64.zip \
+    && cd /tmp \
+    && unzip consul-template.zip \
+    && cp /tmp/consul-template /usr/local/bin/consul-template \
+    && rm -rf /tmp/consul* \
+    && chmod a+x /usr/local/bin/consul-template \
+    && apt-get remove -y curl unzip
 
 ENTRYPOINT ["/bin/sh"]
 CMD ["/start.sh"]
 
-RUN apk update \
-    && apk add curl \
-    && curl -L -o /tmp/consul-template.tar.gz https://github.com/hashicorp/consul-template/releases/download/v0.7.0/consul-template_0.7.0_linux_amd64.tar.gz \
-    && cd /tmp \
-    && tar -xzf consul-template.tar.gz \
-    && cp consul-template_0.7.0_linux_amd64/consul-template /usr/local/bin/consul-template \
-    && rm -rf /tmp/consul* \
-    && chmod a+x /usr/local/bin/consul-template \
-    && apk del curl
-
-ADD haproxy.conf /etc/haproxy/haproxy.conf
+ADD haproxy.conf /etc/haproxy/haproxy.cnf
 
 ADD start.sh /start.sh
 RUN chmod u+x /start.sh
