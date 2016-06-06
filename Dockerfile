@@ -20,7 +20,7 @@ RUN apt-get update \
 ENTRYPOINT ["/bin/sh"]
 CMD ["/start.sh"]
 
-ADD haproxy.conf /etc/haproxy/haproxy.cnf
+ADD haproxy.conf /etc/haproxy/haproxy.cfg
 
 ADD start.sh /start.sh
 RUN chmod u+x /start.sh
