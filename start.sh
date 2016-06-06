@@ -9,7 +9,7 @@ CONSUL_PORT=${CONSUL_PORT:-8500}
 
 cd "$HAPROXY_ROOT"
 
-service restart haproxy
+service haproxy start
 
 /usr/local/bin/consul-template -consul $CONSUL_SERVER:$CONSUL_PORT \
     -template "$TEMPLATE:$CONFIG_FILE:/reload_haproxy.sh" \
