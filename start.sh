@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 HAPROXY_ROOT=/etc/haproxy
 CONFIG_FILE=${HAPROXY_ROOT}/haproxy.cfg
 TEMPLATE=${HAPROXY_ROOT}/haproxy.template
